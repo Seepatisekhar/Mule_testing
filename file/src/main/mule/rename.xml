@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="renameFlow" doc:id="b610d719-848a-412a-8e38-5d90c1627dbf" >
+		<http:listener doc:name="Listener" doc:id="81e1cbb6-b91c-4822-9aaa-a1f65cb3b86e" config-ref="HTTP_Listener_config" path="rename"/>
+		<logger level="INFO" doc:name="Logger" doc:id="05a0ced0-c134-4c94-b4ea-a3973c73c373" message="before rename"/>
+		<file:rename doc:name="Rename" doc:id="28bddab6-a696-4b6b-873a-a9f0dccf436e" config-ref="File_Config" path="D:\Mulesoft\videos\develop\03-file\testfile3" to="testfile2"/>
+		<ee:transform doc:name="Transform Message" doc:id="4bfd7cc6-08c2-43ca-96c9-cfb77f4f032d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="bb6ba87e-74b3-47d0-b71a-f7a4777bf054" message="After rename"/>
+	</flow>
+</mule>

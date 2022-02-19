@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="copyFlow" doc:id="8e8caff1-498e-4c3f-9625-686122060be0" >
+		<http:listener doc:name="Listener" doc:id="35a41364-863a-4454-bf8a-c446d05cece9" config-ref="HTTP_Listener_config" path="copy"/>
+		<file:copy doc:name="Copy" doc:id="3b3ddf8f-4028-4eec-b047-3aeab2011beb" sourcePath="D:\Mulesoft\videos\develop\03-file\target" targetPath="D:\Mulesoft\videos\develop\03-file\source"/>
+		<ee:transform doc:name="Transform Message" doc:id="e7e643ee-b565-4efe-b2ea-cb15ad56d4ad" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+"Message":"copy the files from one path to other path successfully "]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

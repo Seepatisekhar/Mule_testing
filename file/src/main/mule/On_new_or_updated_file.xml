@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="On_new_or_updated_fileFlow" doc:id="b2cf32d3-0108-4305-8bd6-15e82fdb2053" >
+		<file:listener doc:name="On New or Updated File" doc:id="04913bf0-b0d3-43ce-8eb2-a8b68b5cc51d" directory="D:\Mulesoft\videos\develop\03-file\source" moveToDirectory="D:\Mulesoft\videos\develop\03-file\target" config-ref="File_Config" autoDelete="true">
+			<scheduling-strategy >
+				<fixed-frequency frequency="1" timeUnit="MINUTES" />
+			</scheduling-strategy>
+		</file:listener>
+		<file:write doc:name="Write" doc:id="4b0e3e73-8efa-462e-8178-e42c71b2ad4a" config-ref="File_Config" path="D:\Mulesoft\videos\develop\03-file\source\sekharreddy123">
+			<file:content ><![CDATA[this is on new or updated]]></file:content>
+		</file:write>
+		<logger level="INFO" doc:name="Logger" doc:id="7fd27835-818b-4cfe-b18a-1f92f6542339" message="started"/>
+		<ee:transform doc:name="Transform Message" doc:id="dcc9fbe7-509b-49bf-9958-f1de92587205" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

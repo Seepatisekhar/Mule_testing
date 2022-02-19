@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="deleteFlow" doc:id="9996f283-28dc-42d0-98e6-6a2c672e6dd4" >
+		<http:listener doc:name="Listener" doc:id="54b4962b-ff69-42bd-a6bb-fc90f54b56e8" config-ref="HTTP_Listener_config" path="delete"/>
+		<logger level="INFO" doc:name="Logger" doc:id="5f4955ec-48d0-4467-bc94-533208cde7a2" message="before read"/>
+		<file:write doc:name="Write" doc:id="0fe4ad3c-62c2-4db0-b68d-07264b8e187b" config-ref="File_Config" path="D:\Mulesoft\videos\develop\03-file\testfile2">
+			<file:content ><![CDATA[file created]]></file:content>
+		</file:write>
+		<file:delete doc:name="Delete" doc:id="503992bb-bba2-482c-8c67-a347749f3f34" config-ref="File_Config" path="D:\Mulesoft\videos\develop\03-file\testfile2"/>
+		<ee:transform doc:name="Transform Message" doc:id="838fac9e-573e-4e5b-960c-8b9702653c7a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+"message":"folder created and deleted  successfully"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
